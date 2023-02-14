@@ -21,7 +21,6 @@ public class AccidentController {
         return "accidents/createAccident";
     }
 
-
     @GetMapping("/accidents/editAccident")
     public String viewEditAccident() {
         return "accidents/editAccident";
