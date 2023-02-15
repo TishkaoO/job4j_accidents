@@ -25,7 +25,8 @@ public class AccidentMemImpl implements AccidentMem {
 
     @Override
     public Accident create(Accident accident) {
-        accidentMap.put(accident.getId(), accident);
+        var taskId = nextId.incrementAndGet();
+        accidentMap.put(taskId, accident);
         return accident;
     }
 
