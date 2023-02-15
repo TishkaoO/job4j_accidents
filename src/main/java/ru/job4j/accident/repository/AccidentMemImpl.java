@@ -17,16 +17,17 @@ public class AccidentMemImpl implements AccidentMem {
     private Map<Integer, Accident> accidentMap = new HashMap<>();
 
     public AccidentMemImpl() {
-        create(new Accident(nextId.incrementAndGet(), "Какая-то авария", "2 машины столкнулись лоб в лоб, но никто из водителей не пострадал",
+        create(new Accident(1, "Какая-то авария", "2 машины столкнулись лоб в лоб, но никто из водителей не пострадал",
                 "ул. Пушкина, дом Калатушкино"));
-        create(new Accident(nextId.incrementAndGet(), "Жесткая авария", "водитель снес светофор и скрылся с места дтп",
+        create(new Accident(2, "Жесткая авария", "водитель снес светофор и скрылся с места дтп",
                 "ул. Петрова Кузима 17 дом 3"));
     }
 
     @Override
     public Accident create(Accident accident) {
         var taskId = nextId.incrementAndGet();
-        accidentMap.put(taskId, accident);
+        accident.setId(taskId);
+        accidentMap.put(accident.getId(), accident);
         return accident;
     }
 
