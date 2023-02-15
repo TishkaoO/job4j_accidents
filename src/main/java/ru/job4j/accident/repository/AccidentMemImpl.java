@@ -8,22 +8,23 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @ThreadSafe
 @Repository
 public class AccidentMemImpl implements AccidentMem {
-    private int nextId = 1;
+    private AtomicInteger nextId = new AtomicInteger(0);
     private Map<Integer, Accident> accidentMap = new HashMap<>();
 
     public AccidentMemImpl() {
-        create(new Accident(0, "Какая-то авария", "2 машины столкнулись лоб в лоб, но никто из водителей не пострадал",
+        create(new Accident(nextId.incrementAndGet(), "Какая-то авария", "2 машины столкнулись лоб в лоб, но никто из водителей не пострадал",
                 "ул. Пушкина, дом Калатушкино"));
-        create(new Accident(0, "Жесткая авария", "водитель снес светофор и скрылся с места дтп",
+        create(new Accident(nextId.incrementAndGet(), "Жесткая авария", "водитель снес светофор и скрылся с места дтп",
                 "ул. Петрова Кузима 17 дом 3"));
     }
 
     @Override
     public Accident create(Accident accident) {
-        accident.setId(nextId++);
         accidentMap.put(accident.getId(), accident);
         return accident;
     }
