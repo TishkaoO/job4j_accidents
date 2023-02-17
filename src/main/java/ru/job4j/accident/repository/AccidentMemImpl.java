@@ -4,11 +4,9 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ThreadSafe
@@ -19,9 +17,11 @@ public class AccidentMemImpl implements AccidentMem {
 
     public AccidentMemImpl() {
         create(new Accident(1, "Какая-то авария", "2 машины столкнулись лоб в лоб, но никто из водителей не пострадал",
-               "ул. Пушкина, дом Калатушкино", new AccidentType(1, "Две машины")));
+               "ул. Пушкина, дом Калатушкино", new AccidentType(1, "Две машины"),
+                Set.of(new Rule(1, "Статья"))));
         create(new Accident(2, "Жесткая авария", "водитель снес светофор и скрылся с места дтп",
-                "ул. Петрова Кузима 17 дом 3", new AccidentType(2, "Машина и светофор")));
+                "ул. Петрова Кузима 17 дом 3", new AccidentType(2, "Машина и светофор"),
+                Set.of(new Rule(2, "Статья"))));
     }
 
     @Override
@@ -41,7 +41,8 @@ public class AccidentMemImpl implements AccidentMem {
     public boolean update(Accident accident) {
         return accidentMap.computeIfPresent(
                 accident.getId(), (accidentId, OldAccident) -> new Accident(
-                        accidentId, accident.getName(), accident.getText(), accident.getAddress(), new AccidentType())) != null;
+                        accidentId, accident.getName(), accident.getText(), accident.getAddress(),
+                        new AccidentType(), Set.of(new Rule()))) != null;
     }
 
     @Override

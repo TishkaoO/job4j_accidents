@@ -1,12 +1,15 @@
 package ru.job4j.accident.service;
 
+import net.jcip.annotations.ThreadSafe;
+import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.AccidentMem;
 import ru.job4j.accident.repository.AccidentTypeMem;
 
 import java.util.Collection;
 import java.util.Optional;
-
+@ThreadSafe
+@Service
 public class AccidentTypeServiceImpl implements AccidentTypeService {
     private final AccidentTypeMem accidentTypeMem;
 
