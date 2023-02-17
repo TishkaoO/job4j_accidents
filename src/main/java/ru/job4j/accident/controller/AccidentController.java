@@ -6,7 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.service.AccidentService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ThreadSafe
 @Controller
@@ -17,7 +21,11 @@ public class AccidentController {
 
     @GetMapping("/formCreate")
     public String getPageFormUpdate(Model model) {
-        model.addAttribute("accident", accidentService.findAll());
+        List<AccidentType> types = new ArrayList<>();
+        types.add(new AccidentType(1, "Две машины"));
+        types.add(new AccidentType(2, "Машина и человек"));
+        types.add(new AccidentType(3, "Машина и велосипед"));
+        model.addAttribute("types", types);
         return "accidents/formCreate";
     }
 
