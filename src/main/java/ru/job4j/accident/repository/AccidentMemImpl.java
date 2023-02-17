@@ -17,7 +17,6 @@ public class AccidentMemImpl implements AccidentMem {
     private AtomicInteger nextId = new AtomicInteger(0);
     private Map<Integer, Accident> accidentMap = new HashMap<>();
 
-
     public AccidentMemImpl() {
         create(new Accident(1, "Какая-то авария", "2 машины столкнулись лоб в лоб, но никто из водителей не пострадал",
                "ул. Пушкина, дом Калатушкино", new AccidentType(1, "Две машины")));

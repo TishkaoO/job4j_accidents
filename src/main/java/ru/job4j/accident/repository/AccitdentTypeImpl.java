@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AccitdentTypeImpl implements AccidentTypeMem{
+public class AccitdentTypeImpl implements AccidentTypeMem {
     private AtomicInteger nextId = new AtomicInteger(0);
     private Map<Integer, AccidentType> accidentTypeMap = new HashMap<>();
 
