@@ -4,35 +4,36 @@ import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.service.AccidentService;
 
 @ThreadSafe
 @Controller
 @AllArgsConstructor
+@RequestMapping("/accidents")
 public class AccidentController {
     private final AccidentService accidentService;
 
-    @GetMapping("/accidents/createAccident")
-    public String viewCreateAccident() {
-        return "accidents/createAccident";
+    @GetMapping("/formCreate")
+    public String getPageFormUpdate(Model model) {
+        model.addAttribute("accident", accidentService.findAll());
+        return "accidents/formCreate";
     }
 
-    @GetMapping("/accidents/editAccident")
-    public String viewEditAccident() {
-        return "accidents/editAccident";
-    }
-
-    @PostMapping("/accidents/saveAccident")
+    @PostMapping("/save")
     public String save(@ModelAttribute Accident accident) {
         accidentService.create(accident);
         return "redirect:/index";
     }
 
-    @PostMapping("/accidents/updateAccident")
+    @GetMapping("/formUpdate")
+    public String getPageFormUpdate(@RequestParam("id") int id, Model model) {
+        model.addAttribute("accident", accidentService.findById(id).get());
+        return "accidents/formUpdate";
+    }
+
+    @PostMapping("/update")
     public String update(@ModelAttribute Accident accident) {
         accidentService.update(accident);
         return "redirect:/index";
