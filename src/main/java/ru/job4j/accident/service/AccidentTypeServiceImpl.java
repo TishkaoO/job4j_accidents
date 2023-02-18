@@ -32,8 +32,4 @@ public class AccidentTypeServiceImpl implements AccidentTypeService {
         return accidentTypeMem.deleteAccitdentTypeById(id);
     }
 
-    @Override
-    public boolean updateAccidentType(AccidentType accidentType) {
-        return false;
-    }
 }

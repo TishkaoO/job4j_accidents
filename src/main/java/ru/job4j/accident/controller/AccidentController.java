@@ -23,18 +23,19 @@ public class AccidentController {
 
     @GetMapping("/formCreate")
     public String getPageFormUpdate(Model model) {
-        List<AccidentType> types = new ArrayList<>();
-        types.add(new AccidentType(1, "Две машины"));
-        types.add(new AccidentType(2, "Машина и человек"));
-        types.add(new AccidentType(3, "Машина и велосипед"));
-        model.addAttribute("types", types);
-        List<Rule> rules = List.of(
-                new Rule(1, "Статья. 1"),
-                new Rule(2, "Статья. 2"),
-                new Rule(3, "Статья. 3")
-        );
-        model.addAttribute("rules", rules);
-        return "accidents/formCreate";
+        try {
+            model.addAttribute("types", accidentService.findAllAccidentType());
+            List<Rule> rules = List.of(
+                    new Rule(1, "Статья. 1"),
+                    new Rule(2, "Статья. 2"),
+                    new Rule(3, "Статья. 3")
+            );
+            model.addAttribute("rules", rules);
+            return "accidents/formCreate";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "errors/404";
+        }
     }
 
     @PostMapping("/save")

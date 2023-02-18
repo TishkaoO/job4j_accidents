@@ -37,11 +37,4 @@ public class AccitdentTypeImpl implements AccidentTypeMem {
     public boolean deleteAccitdentTypeById(int id) {
         return accidentTypeMap.remove(id) != null;
     }
-
-    @Override
-    public boolean updateAccidentType(AccidentType accidentType) {
-        return accidentTypeMap.computeIfPresent(
-                accidentType.getId(), (accidentTypeId, oldAccidenType) -> new AccidentType(
-                      accidentType.getId(), accidentType.getName())) != null;
-    }
 }

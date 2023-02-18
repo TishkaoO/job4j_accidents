@@ -14,6 +14,4 @@ public interface AccidentTypeMem {
     Optional<AccidentType> findById(int id);
 
     boolean deleteAccitdentTypeById(int id);
-
-    boolean updateAccidentType(AccidentType accidentType);
 }

@@ -1,6 +1,7 @@
 package ru.job4j.accident.service;
 
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -16,4 +17,6 @@ public interface AccidentService {
     Optional<Accident> findById(int id);
 
     Collection<Accident> findAll();
+
+    Collection<AccidentType> findAllAccidentType();
 }

@@ -13,5 +13,4 @@ public interface AccidentTypeService {
 
     boolean deleteAccitdentTypeById(int id);
 
-    boolean updateAccidentType(AccidentType accidentType);
 }

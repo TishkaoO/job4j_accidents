@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 import ru.job4j.accident.repository.AccidentMem;
 
 import java.util.Collection;
@@ -37,5 +39,10 @@ public class AccidentServiceImpl implements AccidentService {
     @Override
     public Collection<Accident> findAll() {
         return accidentMem.findAll();
+    }
+
+    @Override
+    public Collection<AccidentType> findAllAccidentType() {
+        return accidentMem.findAllAccidentTypes();
     }
 }
