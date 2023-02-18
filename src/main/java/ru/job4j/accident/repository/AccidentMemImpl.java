@@ -41,7 +41,7 @@ public class AccidentMemImpl implements AccidentMem {
     public boolean update(Accident accident) {
         return accidentMap.computeIfPresent(
                 accident.getId(), (accidentId, OldAccident) -> new Accident(
-                        accidentId, accident.getName(), accident.getText(), accident.getAddress(),
+                        accidentId, accident.getName(), accident.getDescription(), accident.getAddress(),
                         new AccidentType(), Set.of(new Rule()))) != null;
     }
 
