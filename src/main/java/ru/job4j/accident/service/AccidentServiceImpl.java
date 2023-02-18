@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.repository.AccidentJdbcMem;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -13,30 +12,31 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class AccidentServiceImpl implements AccidentService {
-    private final AccidentMem accidentMem;
+
+    private final AccidentJdbcMem accidentJdbcMem;
 
     @Override
     public Accident create(Accident accident) {
-        return accidentMem.create(accident);
+        return accidentJdbcMem.create(accident);
     }
 
     @Override
     public boolean deleteById(int id) {
-        return accidentMem.deleteById(id);
+        return accidentJdbcMem.deleteById(id);
     }
 
     @Override
     public boolean update(Accident accident) {
-        return accidentMem.update(accident);
+        return accidentJdbcMem.update(accident);
     }
 
     @Override
     public Optional<Accident> findById(int id) {
-        return accidentMem.findById(id);
+        return accidentJdbcMem.findById(id);
     }
 
     @Override
     public Collection<Accident> findAll() {
-        return accidentMem.findAll();
+        return accidentJdbcMem.findAll();
     }
 }
