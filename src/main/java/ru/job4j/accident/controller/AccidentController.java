@@ -38,21 +38,36 @@ public class AccidentController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident, HttpServletRequest request) {
-        String[] ids = request.getParameterValues("rIds");
-        accidentService.create(accident);
-        return "redirect:/index";
+    public String save(@ModelAttribute Accident accident, HttpServletRequest request, Model model) {
+        try {
+            String[] ids = request.getParameterValues("rIds");
+            accidentService.create(accident);
+            return "redirect:/index";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "errors/404";
+        }
     }
 
     @GetMapping("/formUpdate")
     public String getPageFormUpdate(@RequestParam("id") int id, Model model) {
-        model.addAttribute("accident", accidentService.findById(id).get());
-        return "accidents/formUpdate";
+        try {
+            model.addAttribute("accident", accidentService.findById(id).get());
+            return "accidents/formUpdate";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "errors/404";
+        }
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Accident accident) {
-        accidentService.update(accident);
-        return "redirect:/index";
+    public String update(@ModelAttribute Accident accident, Model model) {
+        try {
+            accidentService.update(accident);
+            return "redirect:/index";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "errors/404";
+        }
     }
 }
