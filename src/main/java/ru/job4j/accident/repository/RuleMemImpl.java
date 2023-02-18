@@ -2,6 +2,7 @@ package ru.job4j.accident.repository;
 
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
+import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 
 import java.util.Collection;
@@ -15,6 +16,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RuleMemImpl implements RuleMem {
     private AtomicInteger atomicId = new AtomicInteger(0);
     private Map<Integer, Rule> ruleMap = new HashMap<>();
+
+    public RuleMemImpl() {
+        create(new Rule(1, "Статья. 1"));
+        create(new Rule(2, "Статья. 2"));
+        create(new Rule(3, "Статья. 3"));
+    }
 
     @Override
     public Rule create(Rule rule) {

@@ -6,13 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
+import ru.job4j.accident.service.AccidentTypeService;
+import ru.job4j.accident.service.RuleService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @ThreadSafe
 @Controller
@@ -20,17 +18,14 @@ import java.util.List;
 @RequestMapping("/accidents")
 public class AccidentController {
     private final AccidentService accidentService;
+    private final AccidentTypeService accidentTypeService;
+    private final RuleService ruleService;
 
     @GetMapping("/formCreate")
     public String getPageFormUpdate(Model model) {
         try {
-            model.addAttribute("types", accidentService.findAllAccidentType());
-            List<Rule> rules = List.of(
-                    new Rule(1, "Статья. 1"),
-                    new Rule(2, "Статья. 2"),
-                    new Rule(3, "Статья. 3")
-            );
-            model.addAttribute("rules", rules);
+            model.addAttribute("types", accidentTypeService.findAll());
+            model.addAttribute("rules", ruleService.findAll());
             return "accidents/formCreate";
         } catch (Exception e) {
             model.addAttribute("message", e.getMessage());

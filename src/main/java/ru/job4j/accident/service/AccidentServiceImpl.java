@@ -39,9 +39,4 @@ public class AccidentServiceImpl implements AccidentService {
     public Collection<Accident> findAll() {
         return accidentMem.findAll();
     }
-
-    @Override
-    public Collection<AccidentType> findAllAccidentType() {
-        return accidentMem.findAllAccidentTypes();
-    }
 }

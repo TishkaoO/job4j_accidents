@@ -15,12 +15,6 @@ public class AccidentMemImpl implements AccidentMem {
     private AtomicInteger nextId = new AtomicInteger(0);
     private Map<Integer, Accident> accidentMap = new HashMap<>();
 
-    private final Map<Integer, AccidentType> accidentTypes = new HashMap<>(Map.of(
-            1, new AccidentType(1, "Две машины"),
-            2, new AccidentType(2, "Машина и человек"),
-            3, new AccidentType(3, "Машина и велосипед")
-    ));
-
     public AccidentMemImpl() {
         create(new Accident(1, "Какая-то авария", "2 машины столкнулись лоб в лоб, но никто из водителей не пострадал",
                "ул. Пушкина, дом Калатушкино", new AccidentType(1, "Две машины"),
@@ -59,10 +53,5 @@ public class AccidentMemImpl implements AccidentMem {
     @Override
     public Collection<Accident> findAll() {
         return accidentMap.values();
-    }
-
-    @Override
-    public Collection<AccidentType> findAllAccidentTypes() {
-        return accidentTypes.values();
     }
 }

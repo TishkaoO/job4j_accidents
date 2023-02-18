@@ -31,5 +31,4 @@ public class AccidentTypeServiceImpl implements AccidentTypeService {
     public boolean deleteAccitdentTypeById(int id) {
         return accidentTypeMem.deleteAccitdentTypeById(id);
     }
-
 }

@@ -12,5 +12,4 @@ public interface AccidentTypeService {
     Optional<AccidentType> findById(int id);
 
     boolean deleteAccitdentTypeById(int id);
-
 }

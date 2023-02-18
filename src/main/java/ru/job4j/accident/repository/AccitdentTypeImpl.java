@@ -16,6 +16,12 @@ public class AccitdentTypeImpl implements AccidentTypeMem {
     private AtomicInteger nextId = new AtomicInteger(0);
     private Map<Integer, AccidentType> accidentTypeMap = new HashMap<>();
 
+    public AccitdentTypeImpl() {
+        create(new AccidentType(1, "Две машины"));
+        create(new AccidentType(2, "Машина и человек"));
+        create(new AccidentType(3, "Машина и велосипед"));
+    }
+
     @Override
     public AccidentType create(AccidentType accidentType) {
         var typeId = nextId.incrementAndGet();
