@@ -3,10 +3,6 @@ package ru.job4j.accident.repository;
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 
@@ -59,8 +55,8 @@ public class AccidentHibernate implements AccidentHibernateRepository {
         try {
             session.beginTransaction();
             int count = session.createQuery(
-                            "update Accident set name = :fName, description = :fDescription" +
-                                    ", address = :fAddress, type = :fType, rules = :fRules")
+                            "update Accident set name = :fName, description = :fDescription"
+                                    + ", address = :fAddress, type = :fType, rules = :fRules")
                     .setParameter(":fName", accident.getName())
                     .setParameter(":fDescription", accident.getDescription())
                     .setParameter(":fAddress", accident.getAddress())
@@ -93,7 +89,6 @@ public class AccidentHibernate implements AccidentHibernateRepository {
         }
         return Optional.empty();
     }
-
 
     @Override
     public List<Accident> findAll() {
