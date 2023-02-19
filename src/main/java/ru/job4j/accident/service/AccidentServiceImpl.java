@@ -4,39 +4,37 @@ import lombok.AllArgsConstructor;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.repository.AccidentJdbcMem;
+import ru.job4j.accident.repository.AccidentRepository;
 
-import java.util.Collection;
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 @ThreadSafe
 @Service
 @AllArgsConstructor
-public class AccidentServiceImpl implements AccidentService {
+public class AccidentServiceImpl {
+    private final AccidentRepository accidentRepository;
 
-    private final AccidentJdbcMem accidentJdbcMem;
-
-    @Override
     public Accident create(Accident accident) {
-        return accidentJdbcMem.create(accident);
+        return accidentRepository.save(accident);
     }
 
-    @Override
-    public boolean deleteById(int id) {
-        return accidentJdbcMem.deleteById(id);
+    public void deleteById(int id) {
+        Accident accident = accidentRepository.findById(id)
+                .orElseThrow(() ->  new EntityNotFoundException("Accident with id " + id + " not found"));
+        accidentRepository.delete(accident);
     }
 
-    @Override
-    public boolean update(Accident accident) {
-        return accidentJdbcMem.update(accident);
+    public Accident update(Accident accident) {
+        return accidentRepository.save(accident);
     }
 
-    @Override
-    public Optional<Accident> findById(int id) {
-        return accidentJdbcMem.findById(id);
+    public Accident findById(int id) {
+        Accident accident = accidentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Accident with id " + id + " not found"));
+        return accident;
     }
 
-    @Override
-    public Collection<Accident> findAll() {
-        return accidentJdbcMem.findAll();
+    public Iterable<Accident> findAll() {
+        return accidentRepository.findAll();
     }
 }
