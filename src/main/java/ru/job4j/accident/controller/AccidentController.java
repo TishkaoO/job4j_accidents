@@ -19,7 +19,6 @@ import java.util.Set;
 @ThreadSafe
 @Controller
 @AllArgsConstructor
-//@RequestMapping("/accidents")
 public class AccidentController {
     private final AccidentService accidentService;
     private final AccidentTypeService accidentTypeService;
