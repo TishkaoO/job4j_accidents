@@ -8,62 +8,66 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.service.AccidentService;
 import ru.job4j.accident.service.AccidentTypeService;
-import ru.job4j.accident.service.RuleService;
+import ru.job4j.accident.service.RuleServise;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @ThreadSafe
 @Controller
 @AllArgsConstructor
-@RequestMapping("/accidents")
+//@RequestMapping("/accidents")
 public class AccidentController {
     private final AccidentService accidentService;
     private final AccidentTypeService accidentTypeService;
-    private final RuleService ruleService;
+    private final RuleServise ruleService;
+
+    @GetMapping("/allAccidents")
+    public String getPageAllAccidents(Model model) {
+        model.addAttribute("accidents", accidentService.getAllAccidents());
+        return "/accidents/listAccident";
+    }
 
     @GetMapping("/formCreate")
     public String getPageFormUpdate(Model model) {
-        try {
-            model.addAttribute("types", accidentTypeService.findAll());
-            model.addAttribute("rules", ruleService.findAll());
-            return "accidents/formCreate";
-        } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "errors/404";
-        }
+        model.addAttribute("types", accidentTypeService.getAllAccidentTypes());
+        model.addAttribute("rules", ruleService.getAllRules());
+        return "accidents/formCreate";
     }
 
-    @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident, HttpServletRequest request, Model model) {
-        try {
-            String[] ids = request.getParameterValues("rIds");
-            accidentService.create(accident);
-            return "redirect:/index";
-        } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
+    @PostMapping("/saveAccident")
+    public String create(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId, Model model) {
+        if (accidentTypeService.getAccidentTypeById(typeId).isEmpty()) {
+            model.addAttribute("message", "Тип нарушения с указанным идентификатором не найден");
             return "errors/404";
         }
+        accidentService.saveAccident(accident);
+        return "redirect:/accidents/listAccident";
     }
 
     @GetMapping("/formUpdate")
     public String getPageFormUpdate(@RequestParam("id") int id, Model model) {
-        try {
-            model.addAttribute("accident", accidentService.findById(id).get());
-            return "accidents/formUpdate";
-        } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
+        Optional<Accident> accidentOptional = accidentService.getAccidentById(id);
+        if (accidentOptional.isEmpty()) {
+            model.addAttribute("message", "Инцидент с указанным идентификатором не найден");
             return "errors/404";
         }
+        model.addAttribute("accident", accidentOptional.get());
+        model.addAttribute("types", accidentTypeService.getAllAccidentTypes());
+        model.addAttribute("rules", ruleService.getAllRules());
+        return "accidents/formUpdate";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/updateAccident")
     public String update(@ModelAttribute Accident accident, Model model) {
-        try {
-            accidentService.update(accident);
-            return "redirect:/index";
-        } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
+        var isUpdate = accidentService.update(accident);
+        if (!isUpdate) {
+            model.addAttribute("message", "Не удалось обновить данные");
             return "errors/404";
         }
+        return "redirect:/accidents/listAccident";
     }
 }
