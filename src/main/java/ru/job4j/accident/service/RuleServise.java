@@ -1,17 +1,16 @@
 package ru.job4j.accident.service;
 
 import lombok.AllArgsConstructor;
-import net.jcip.annotations.ThreadSafe;
+
 import org.springframework.stereotype.Service;
-import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.AccidentType;
+
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.RuleRepository;
 
 import javax.persistence.EntityNotFoundException;
+
 import java.util.*;
 
-@ThreadSafe
 @Service
 @AllArgsConstructor
 public class RuleServise {
@@ -22,12 +21,7 @@ public class RuleServise {
     }
 
     public Collection<Rule> getAllRules() {
-        List<Rule> list = new ArrayList<>();
-        var iterable = repository.findAll();
-        for (Rule tmp : iterable) {
-            list.add(tmp);
-        }
-        return list;
+        return repository.findAll();
     }
 
     public Optional<Rule> getRuleById(int id) {

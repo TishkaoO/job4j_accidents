@@ -1,8 +1,9 @@
 package ru.job4j.accident.service;
 
 import lombok.AllArgsConstructor;
-import net.jcip.annotations.ThreadSafe;
+
 import org.springframework.stereotype.Service;
+
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
@@ -11,7 +12,6 @@ import ru.job4j.accident.repository.AccidentRepository;
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
-@ThreadSafe
 @Service
 @AllArgsConstructor
 public class AccidentService {
@@ -29,8 +29,8 @@ public class AccidentService {
 
     public boolean update(Accident accident) {
         Map<Integer, Accident> accidentMap = new HashMap<>();
-        var iterable = accidentRepository.findAll();
-        for (Accident tmp : iterable) {
+        var list = accidentRepository.findAll();
+        for (Accident tmp : list    ) {
             accidentMap.put(accident.getId(), tmp);
         }
         return accidentMap.computeIfPresent(accident.getId(), (accidentId, oldAccident) -> new Accident(
@@ -45,12 +45,7 @@ public class AccidentService {
     }
 
     public Collection<Accident> getAllAccidents() {
-        List<Accident> list = new ArrayList<>();
-        var iterable = accidentRepository.findAll();
-        for (Accident tmp : iterable) {
-            list.add(tmp);
-        }
-        return list;
+        return accidentRepository.findAll();
     }
 
 }

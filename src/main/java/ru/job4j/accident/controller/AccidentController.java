@@ -1,22 +1,18 @@
 package ru.job4j.accident.controller;
 
 import lombok.AllArgsConstructor;
-import net.jcip.annotations.ThreadSafe;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.service.AccidentService;
 import ru.job4j.accident.service.AccidentTypeService;
 import ru.job4j.accident.service.RuleServise;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-@ThreadSafe
 @Controller
 @AllArgsConstructor
 public class AccidentController {
