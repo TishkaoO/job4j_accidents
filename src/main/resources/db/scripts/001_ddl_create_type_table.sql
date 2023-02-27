@@ -1,4 +1,4 @@
-create table if not exists accident_type (
+create table if not exists type (
  id serial primary key,
  name varchar not null
 );

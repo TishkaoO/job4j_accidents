@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:app.properties")
-@EnableJpaRepositories("ru.job4j.accident.repository")
+@EnableJpaRepositories(basePackages = "ru.job4j.accident.repository")
 @EnableTransactionManagement
 public class DataConfig {
 

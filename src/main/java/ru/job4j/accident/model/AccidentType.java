@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "accident_type")
+@Table(name = "type")
 public class AccidentType {
     @EqualsAndHashCode.Include
     @Id

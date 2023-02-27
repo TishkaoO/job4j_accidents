@@ -23,7 +23,7 @@ public class AccidentController {
     @GetMapping("/allAccidents")
     public String getPageAllAccidents(Model model) {
         model.addAttribute("accidents", accidentService.getAllAccidents());
-        return "/accidents/listAccident";
+        return "accidents/listAccident";
     }
 
     @GetMapping("/formCreate")
@@ -34,13 +34,14 @@ public class AccidentController {
     }
 
     @PostMapping("/saveAccident")
-    public String create(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId, Model model) {
-        if (accidentTypeService.getAccidentTypeById(typeId).isEmpty()) {
-            model.addAttribute("message", "Тип нарушения с указанным идентификатором не найден");
+    public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
+                         @RequestParam("rIds") int rIds, Model model) {
+        if (accidentTypeService.getAccidentTypeById(typeId).isEmpty() || ruleService.getRuleById(rIds).isEmpty()) {
+            model.addAttribute("message", "Тип нарушения или статья с указанным идентификатором не найдены");
             return "errors/404";
         }
-        accidentService.saveAccident(accident);
-        return "redirect:/accidents/listAccident";
+        accidentService.createAccident(accident);
+        return "redirect:/allAccidents";
     }
 
     @GetMapping("/formUpdate")
@@ -63,6 +64,6 @@ public class AccidentController {
             model.addAttribute("message", "Не удалось обновить данные");
             return "errors/404";
         }
-        return "redirect:/accidents/listAccident";
+        return "redirect:/allAccidents";
     }
 }

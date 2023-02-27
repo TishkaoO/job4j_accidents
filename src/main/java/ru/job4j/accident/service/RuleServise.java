@@ -20,18 +20,14 @@ public class RuleServise {
         return repository.save(rule);
     }
 
-    public Collection<Rule> getAllRules() {
+    public List<Rule> getAllRules() {
         return repository.findAll();
     }
 
     public Optional<Rule> getRuleById(int id) {
-        var rules = getAllRules();
-        for (Rule tmp : rules) {
-            if (tmp.getId() == id) {
-                return Optional.ofNullable(tmp);
-            }
-        }
-        return Optional.empty();
+        var rules = repository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Статья с id = " + id + " не найдена"));
+        return Optional.ofNullable(rules);
     }
 
     public void deleteRuleById(int id) {
@@ -46,7 +42,7 @@ public class RuleServise {
         for (Rule tmp : rules) {
             accidentMap.put(rule.getId(), tmp);
         }
-        return accidentMap.computeIfPresent(rule.getId(), (ruleId, oldRulet) -> new Rule(
+        return accidentMap.computeIfPresent(rule.getId(), (ruleId, oldRule) -> new Rule(
                 ruleId, rule.getName())) != null;
     }
 }

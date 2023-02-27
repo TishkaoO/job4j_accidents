@@ -14,7 +14,7 @@ import java.util.*;
 public class AccidentTypeService {
     private final AccidentTypeRepository repository;
 
-    public Collection<AccidentType> getAllAccidentTypes() {
+    public List<AccidentType> getAllAccidentTypes() {
        return repository.findAll();
     }
 
