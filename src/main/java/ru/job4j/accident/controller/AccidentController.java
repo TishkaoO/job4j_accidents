@@ -44,7 +44,7 @@ public class AccidentController {
         return "redirect:/allAccidents";
     }
 
-    @GetMapping("/formUpdate")
+    @GetMapping("/formUpdate/{id}")
     public String getPageFormUpdate(@RequestParam("id") int id, Model model) {
         Optional<Accident> accidentOptional = accidentService.getAccidentById(id);
         if (accidentOptional.isEmpty()) {

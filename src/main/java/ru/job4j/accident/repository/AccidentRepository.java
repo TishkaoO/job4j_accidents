@@ -10,5 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccidentRepository extends CrudRepository<Accident, Integer> {
+    @Override
     List<Accident> findAll();
 }

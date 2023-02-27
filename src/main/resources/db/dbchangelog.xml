@@ -9,6 +9,6 @@
     <include file="scripts/002_ddl_create_rule_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/003_ddl_create_accident_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/004_ddl_create_accident_rule.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/005_dml_insert_rule.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/006_dml_insert_type.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/005_dml_insert_type.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/006_dml_insert_rule.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

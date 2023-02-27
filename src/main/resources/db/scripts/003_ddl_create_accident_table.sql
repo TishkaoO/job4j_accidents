@@ -3,5 +3,5 @@ create table if not exists accident (
  name varchar not null,
  description text not null,
  address varchar not null,
- type_id int references type(id)
+ type_id int not null references type(id)
 );

@@ -54,9 +54,13 @@
                 <td th:text="${accident.name}"></td>
                 <td th:text="${accident.description}"></td>
                 <td th:text="${accident.address}"></td>
-                <td th:text="${accident.type.name}"/>
-                <td th:each="rule: ${accident.rules}"
-                    th:text="${rule.name}"></td>
+                <td th:text="${accident.type.name}"></td>
+                <td>
+                    <div th:each="rule: ${accident.rules}" >
+                        <span th:text="${rule.name}" />
+                        <span th:text="${rule.id}" />
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>

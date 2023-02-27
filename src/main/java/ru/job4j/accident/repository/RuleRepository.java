@@ -11,5 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 public interface RuleRepository extends CrudRepository<Rule, Integer> {
+    @Override
     List<Rule> findAll();
 }
