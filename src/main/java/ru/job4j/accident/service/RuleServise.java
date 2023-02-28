@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.RuleRepository;
 
@@ -24,10 +25,13 @@ public class RuleServise {
         return repository.findAll();
     }
 
-    public Optional<Rule> getRuleById(int id) {
-        var rules = repository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Статья с id = " + id + " не найдена"));
-        return Optional.ofNullable(rules);
+    public Set<Rule> getRulesById(List<Integer> ids) {
+        Set<Rule> rules = new HashSet<>();
+        for (Integer rId : ids) {
+            Optional<Rule> rule = repository.findById(rId);
+            rule.ifPresent(rules::add);
+        }
+        return rules;
     }
 
     public void deleteRuleById(int id) {
