@@ -2,7 +2,6 @@ package ru.job4j.accident.service;
 
 import lombok.AllArgsConstructor;
 
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import ru.job4j.accident.model.Accident;
@@ -11,16 +10,19 @@ import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentRepository;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class AccidentService {
     private final AccidentRepository accidentRepository;
+    private final AccidentTypeService accidentTypeService;
 
-    public Accident createAccident(Accident accident) {
-        return accidentRepository.save(accident);
+    public boolean createAccident(Accident accident, Optional<AccidentType> accidentType, Set<Rule> rules) {
+        var type = accidentType.get();
+        accident.setType(type);
+        accident.setRules(rules);
+        return accidentRepository.save(accident) != null;
     }
 
     public void deleteAccidentById(int id) {

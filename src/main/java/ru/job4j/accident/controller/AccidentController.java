@@ -11,7 +11,7 @@ import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
 import ru.job4j.accident.service.AccidentTypeService;
-import ru.job4j.accident.service.RuleServise;
+import ru.job4j.accident.service.RuleService;
 
 import java.util.*;
 
@@ -20,7 +20,7 @@ import java.util.*;
 public class AccidentController {
     private final AccidentService accidentService;
     private final AccidentTypeService accidentTypeService;
-    private final RuleServise ruleService;
+    private final RuleService ruleService;
 
     @GetMapping("/allAccidents")
     public String getPageAllAccidents(Model model) {
@@ -38,18 +38,13 @@ public class AccidentController {
     @PostMapping("/saveAccident")
     public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
                        @RequestParam("rIds") List<Integer> rIds, Model model) {
-        Optional<AccidentType> accidentType = accidentTypeService.getAccidentTypeById(typeId);
-        Set<Rule> rules = ruleService.getRulesById(rIds);
-        if (accidentType.isEmpty()) {
-            model.addAttribute("message", "Тип нарушения указанным идентификатором не найден");
-            return "errors/404";
-        } else if (rules.isEmpty()) {
-            model.addAttribute("message", "Статьи с указанным идентификатором не найдены");
-            return "errors/404";
+        var accidentType = accidentTypeService.getAccidentTypeById(typeId);
+        var rules = ruleService.getRulesById(rIds);
+        var isCreate = accidentService.createAccident(accident, accidentType, rules);
+        if (!isCreate) {
+            model.addAttribute("message",
+                    "Тип нарушения или статья указанным идентификатором не найдены");
         }
-        accident.setType(accidentType.get());
-        accident.setRules(rules);
-        accidentService.createAccident(accident);
         return "redirect:/allAccidents";
     }
 
