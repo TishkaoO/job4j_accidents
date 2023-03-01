@@ -38,7 +38,7 @@ public class AccidentController {
     @PostMapping("/saveAccident")
     public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
                        @RequestParam("rIds") List<Integer> rIds, Model model) {
-        var accidentType = accidentTypeService.getAccidentTypeById(typeId);
+        var accidentType = accidentTypeService.getAccidentTypeByI(typeId);
         var rules = ruleService.getRulesById(rIds);
         var isCreate = accidentService.createAccident(accident, accidentType, rules);
         if (!isCreate) {
