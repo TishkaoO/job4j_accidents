@@ -44,6 +44,7 @@ public class AccidentController {
         if (!isCreate) {
             model.addAttribute("message",
                     "Тип нарушения или статья указанным идентификатором не найдены");
+            return "errors/404";
         }
         return "redirect:/allAccidents";
     }
