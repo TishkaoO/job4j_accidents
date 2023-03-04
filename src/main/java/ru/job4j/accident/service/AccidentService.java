@@ -16,7 +16,6 @@ import java.util.*;
 @AllArgsConstructor
 public class AccidentService {
     private final AccidentRepository accidentRepository;
-    private final AccidentTypeService accidentTypeService;
 
     public boolean createAccident(Accident accident, Optional<AccidentType> accidentType, Set<Rule> rules) {
         var type = accidentType.get();

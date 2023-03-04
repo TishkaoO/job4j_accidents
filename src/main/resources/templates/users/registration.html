@@ -14,7 +14,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-    <title>Авторизация</title>
+    <title>Регистрация</title>
     <style>
         .form-signin {
             max-width: 300px;
@@ -25,12 +25,12 @@
 <body>
 <div class="container py-3">
     <main class="form-signin mx-auto">
-        <h1 class="h3 mb- fw-normal text-center">Авторизация</h1>
+        <h1 class="h3 mb- fw-normal text-center">Регистрация</h1>
         <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
             <span th:text="${errorMessage}"></span>
         </div>
 
-        <form th:action="@{/formLogin}" method="post">
+        <form th:action="@{/reg}" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
             <div class="form-group">
@@ -39,7 +39,6 @@
                        placeholder="Введите имя пользователя" required>
             </div>
 
-
             <div class="form-group">
                 <label for="password" class="text-center">Пароль</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль"
@@ -47,11 +46,7 @@
             </div>
 
             <hr class="my-1">
-            <button type="submit" class="btn btn-primary btn-block">Войти</button>
-            <div class="form-group row justify-content-center">Если у вас нет аккаунта :
-                <a th:href="@{/formRegistration}" class="link" role="button"
-                   aria-pressed="true">Регистрация</a>
-            </div>
+            <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
         </form>
     </main>
 </div>
