@@ -3,6 +3,8 @@ package ru.job4j.accident.service;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import ru.job4j.accident.model.User;
 import ru.job4j.accident.repository.AuthorityRepository;
 import ru.job4j.accident.repository.UserRepository;
@@ -14,16 +16,9 @@ public class UserService {
     private final PasswordEncoder encoder;
 
     public boolean saveUser(User user) {
-        boolean rsl = true;
-        var userFromDb = userRepository.findByUserName(user.getUserName());
-        if (userFromDb != null) {
-            rsl = false;
-            return rsl;
-        }
         user.setEnabled(true);
         user.setPassword(encoder.encode(user.getPassword()));
         user.setAuthority(authorityRepository.findByAuthority("ROLE_USER"));
-        userRepository.save(user);
-        return true;
+       return userRepository.save(user) != null;
     }
 }

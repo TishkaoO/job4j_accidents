@@ -19,9 +19,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String password;
-
     private String userName;
+
+    private String password;
 
     @ManyToOne
     @JoinColumn(name = "authority_id")

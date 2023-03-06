@@ -2,6 +2,7 @@ package ru.job4j.accident.controller;
 
 import lombok.AllArgsConstructor;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,9 @@ public class RegistrationController {
 
     @PostMapping("/reg")
     public String regSave(@ModelAttribute User user, Model model) {
-        var isCreate = userService.saveUser(user);
-        if (!isCreate) {
+        try {
+            userService.saveUser(user);
+        } catch (DataIntegrityViolationException e) {
             model.addAttribute("message", "такой пользователь уже существует");
             return "errors/registerError";
         }
