@@ -16,9 +16,13 @@ public class UserService {
     private final PasswordEncoder encoder;
 
     public boolean saveUser(User user) {
+        if (user.getUsername() != null) {
+            return false;
+        }
         user.setEnabled(true);
         user.setPassword(encoder.encode(user.getPassword()));
         user.setAuthority(authorityRepository.findByAuthority("ROLE_USER"));
-       return userRepository.save(user) != null;
+        userRepository.save(user);
+        return true;
     }
 }
