@@ -26,8 +26,8 @@ public class RegistrationController {
 
     @PostMapping("/reg")
     public String regSave(@ModelAttribute User user, Model model) {
-        var isCrate = userService.saveUser(user);
-        if (!isCrate) {
+        var isCreate = userService.saveUser(user);
+        if (!isCreate) {
             model.addAttribute("message", "такой пользователь уже существует");
             return "errors/registerError";
         }
