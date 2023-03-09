@@ -25,7 +25,6 @@ public class UserService {
         try {
             userRepository.save(user);
             result = true;
-            return result;
         } catch (Exception e) {
             log.error("Error user is not save ", e);
         }
