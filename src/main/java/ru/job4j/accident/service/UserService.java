@@ -28,7 +28,7 @@ public class UserService {
             return result;
         } catch (Exception e) {
             log.error("Error user is not save ", e);
-            return result;
         }
+        return result;
     }
 }
