@@ -75,15 +75,4 @@ public class AccidentController {
         }
         return "redirect:/allAccidents";
     }
-
-    @GetMapping("/delete/{id}")
-    public String delete(Model model, @PathVariable int id) {
-        try {
-            accidentService.deleteAccidentById(id);
-        } catch (Exception e) {
-            model.addAttribute("message", "Инцидент с указанным идентификатором не найден");
-            return "errors/404";
-        }
-        return "redirect:/allAccidents";
-    }
 }
