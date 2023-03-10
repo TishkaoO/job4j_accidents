@@ -44,7 +44,6 @@ public class AccidentService {
         }) != null;
     }
 
-
     public Optional<Accident> getAccidentById(int id) {
         Accident accident = accidentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Инцидент с id = " + id + " не найден"));
@@ -52,6 +51,6 @@ public class AccidentService {
     }
 
     public List<Accident> getAllAccidents() {
-       return accidentRepository.findAll();
+        return accidentRepository.findAll();
     }
 }
