@@ -26,6 +26,6 @@ class LoginControllerTest {
        this.mockMvc.perform(get("/formLogin"))
                .andDo(print())
                .andExpect(status().isOk())
-               .andExpect(view().name("users/logi"));
+               .andExpect(view().name("users/login"));
     }
 }
