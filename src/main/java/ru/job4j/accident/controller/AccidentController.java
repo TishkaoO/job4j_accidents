@@ -29,7 +29,8 @@ public class AccidentController {
     }
 
     @GetMapping("/formCreate")
-    public String getPageFormUpdate(Model model) {
+    public String getPageFormCreate(Model model) {
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         model.addAttribute("types", accidentTypeService.getAllAccidentTypes());
         model.addAttribute("rules", ruleService.getAllRules());
         return "accidents/formCreate";
@@ -49,24 +50,38 @@ public class AccidentController {
         return "redirect:/allAccidents";
     }
 
-    @GetMapping("/formUpdate/{id}")
-    public String getPageFormUpdate(@RequestParam("id") int id, Model model) {
-        Optional<Accident> accidentOptional = accidentService.getAccidentById(id);
-        if (accidentOptional.isEmpty()) {
-            model.addAttribute("message", "Инцидент с указанным идентификатором не найден");
+    @GetMapping("/formUpdate")
+    public String formUpdate(@RequestParam("id") int id, Model model) {
+        Optional<Accident> accident = accidentService.getAccidentById(id);
+        if (accident.isEmpty()) {
             return "errors/404";
         }
-        model.addAttribute("accident", accidentOptional.get());
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        model.addAttribute("accident", accident.get());
         model.addAttribute("types", accidentTypeService.getAllAccidentTypes());
         model.addAttribute("rules", ruleService.getAllRules());
         return "accidents/formUpdate";
     }
 
-    @PostMapping("/updateAccident")
-    public String update(@ModelAttribute Accident accident, Model model) {
+    @PostMapping("/update")
+    public String update(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
+                         @RequestParam("rIds") List<Integer> rIds, Model model) {
+        accident.setType(accidentTypeService.getAccidentTypeById(typeId).get());
+        accident.setRules(ruleService.getRulesById(rIds));
         var isUpdate = accidentService.update(accident);
         if (!isUpdate) {
             model.addAttribute("message", "Не удалось обновить данные");
+            return "errors/404";
+        }
+        return "redirect:/allAccidents";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable int id) {
+        try {
+            accidentService.deleteAccidentById(id);
+        } catch (Exception e) {
+            model.addAttribute("message", "Инцидент с указанным идентификатором не найден");
             return "errors/404";
         }
         return "redirect:/allAccidents";

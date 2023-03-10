@@ -15,59 +15,48 @@
 </head>
 <body>
 <div class="container">
+    <div>
+        <span>Login as: </span>
+        <span th:text="${user.username}"></span>
+    </div>
     <header th:insert="blocks/header :: header"></header>
-
     <div class="row pt-3">
         <div class="card" style="width: 100%">
-
             <div class="card-header">
                 Редактирование инцидента
             </div>
-
             <div class="card-body">
-                <form th:action="@{/updateAccident/{id}}" method="post" th:object="${accident}">
+                <form th:action="@{/update}" method="POST" th:object="${accident}">
                     <input type="hidden" name="id" th:field="*{id}"/>
-
                     <div class="form-group">
-                        <label for="name">Укажите название</label>
+                        <label for="name">Имя</label>
                         <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
                     </div>
-
                     <div class="form-group">
-                        <label for="name">Укажите информацию о правонарушении</label>
+                        <label for="description">Информация о нарушении</label>
                         <input type="text" class="form-control" name="description" id="description" th:field="*{description}">
                     </div>
-
                     <div class="form-group">
-                        <label for="name">Укажите адрес правонарушения</label>
+                        <label for="address">Адрес</label>
                         <input type="text" class="form-control" name="address" id="address" th:field="*{address}">
                     </div>
-
                     <div class="form-group">
-                        <label for="type.id" name="types">Выберите тип правонарушения</label>
-                        <select class="form-control" id="type.id"  name="type.id" th:field="*{type.id}">
+                        <label for="type.id">Выберите тип нарушения</label>
+                        <select class="form-control" id="type.id"  name="type.id">
                             <option th:each="type: ${types}"
                                     th:text="${type.name}"
                                     th:value="${type.id}"></option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="type.id" name="rIds">Статья</label>
-                        <select class="form-control" id="rIds" name="rIds" multiple required th:field="*{rule.name}">
+                        <select class="form-control" id="rIds" name="rIds" multiple required>
                             <option th:each="rule: ${rules}"
                                     th:text="${rule.name}"
                                     th:value="${rule.id}"></option>
                         </select>
                     </div>
-
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary w-100">Сохранить</button>
-                    </div>
-
-                    <div class="col-4"><a class="btn btn-default w-100" th:href="@{/delete/{id}(id=${accident.id})}">Удалить</a></div>
-                    <div class="col-4"><a class="btn btn-danger w-100" th:href="@{/allAccidents}">Отмена</a>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
             </div>
         </div>

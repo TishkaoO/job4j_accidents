@@ -25,21 +25,25 @@ public class AccidentService {
     }
 
     public void deleteAccidentById(int id) {
-        Accident accident = accidentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Инцидент с id = " + id + " не найден"));
-        accidentRepository.delete(accident);
+        accidentRepository.deleteById(id);
     }
 
     public boolean update(Accident accident) {
         Map<Integer, Accident> accidentMap = new HashMap<>();
         var list = accidentRepository.findAll();
         for (Accident tmp : list) {
-            accidentMap.put(accident.getId(), tmp);
+            accidentMap.put(tmp.getId(), tmp);
         }
-        return accidentMap.computeIfPresent(accident.getId(), (accidentId, oldAccident) -> new Accident(
-                accidentId, accident.getName(), accident.getDescription(), accident.getAddress(),
-                new AccidentType(), Set.of(new Rule()))) != null;
+        return accidentMap.computeIfPresent(accident.getId(), (accidentId, oldAccident) -> {
+            oldAccident.setName(accident.getName());
+            oldAccident.setDescription(accident.getDescription());
+            oldAccident.setAddress(accident.getAddress());
+            oldAccident.setType(accident.getType());
+            oldAccident.setRules(accident.getRules());
+            return oldAccident;
+        }) != null;
     }
+
 
     public Optional<Accident> getAccidentById(int id) {
         Accident accident = accidentRepository.findById(id)
