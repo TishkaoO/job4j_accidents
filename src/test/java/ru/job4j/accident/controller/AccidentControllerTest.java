@@ -44,7 +44,7 @@ class AccidentControllerTest {
     @WithMockUser
     void wheGetPageFormUpdateByAccidentId() throws Exception {
         int id = 1;
-        this.mockMvc.perform(get("/formUpdat").param("id", String.valueOf(id)))
+        this.mockMvc.perform(get("/formUpdatу").param("id", String.valueOf(id)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("accidents/formUpdate"));
