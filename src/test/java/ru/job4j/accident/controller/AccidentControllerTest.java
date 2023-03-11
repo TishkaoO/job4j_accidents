@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class AccidentControllerTest {
     @Autowired
-    private MockMvc mockMv;
+    private MockMvc mockMvc;
 
     @Test
     @WithMockUser
