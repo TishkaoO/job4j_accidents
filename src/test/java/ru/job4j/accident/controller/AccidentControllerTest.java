@@ -24,7 +24,7 @@ class AccidentControllerTest {
     @Test
     @WithMockUser
      void whenGetPageAllAccidents() throws Exception {
-        this.mockMvc.perform(get("/allAccidents"))
+        this.mockMvc.perform(get("/allAccident"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("accidents/listAccident"));
