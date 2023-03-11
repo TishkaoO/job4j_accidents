@@ -34,7 +34,7 @@ class AccidentControllerTest {
     @Test
     @WithMockUser
     void whenGetPageFormCreate() throws Exception {
-        this.mockMvc.perform(get("/formCreate"))
+        this.mockMvc.perform(get("/formCreates"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("accidents/formCreate"));
