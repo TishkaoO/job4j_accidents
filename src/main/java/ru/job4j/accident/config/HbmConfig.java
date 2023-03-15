@@ -2,9 +2,7 @@ package ru.job4j.accident.config;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -16,7 +14,6 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 public class HbmConfig {
-
     @Bean
     public LocalSessionFactoryBean sessionFactory(@Value("${hibernate.dialect}") String dialect, DataSource ds) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();

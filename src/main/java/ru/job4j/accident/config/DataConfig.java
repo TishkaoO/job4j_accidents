@@ -2,10 +2,7 @@ package ru.job4j.accident.config;
 
 import liquibase.integration.spring.SpringLiquibase;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -18,15 +15,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@PropertySource("classpath:application-prod.properties")
+@PropertySource("classpath:application.properties")
 @EnableJpaRepositories(basePackages = "ru.job4j.accident.repository")
 @EnableTransactionManagement
 public class DataConfig {
-    private final Environment environment;
-
-    public DataConfig(Environment environment) {
-        this.environment = environment;
-    }
 
     @Primary
     @Bean
@@ -48,20 +40,10 @@ public class DataConfig {
     }
 
     @Bean
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
-        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
-        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
-        dataSource.setPassword(environment.getProperty("spring.datasource.password"));
-        return dataSource;
-    }
-
-    @Bean
-    public SpringLiquibase liquibase() {
+    public SpringLiquibase liquibase(DataSource ds) {
         SpringLiquibase liquibase = new SpringLiquibase();
-        liquibase.setDataSource(dataSource());
         liquibase.setChangeLog("classpath:db/dbchangelog.xml");
+        liquibase.setDataSource(ds);
         return liquibase;
     }
 }

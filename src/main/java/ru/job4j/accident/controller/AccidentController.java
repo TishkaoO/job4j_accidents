@@ -54,6 +54,7 @@ public class AccidentController {
     public String formUpdate(@RequestParam("id") int id, Model model) {
         Optional<Accident> accident = accidentService.getAccidentById(id);
         if (accident.isEmpty()) {
+            model.addAttribute("message", "не удалось найти нужный инцидент");
             return "errors/404";
         }
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
