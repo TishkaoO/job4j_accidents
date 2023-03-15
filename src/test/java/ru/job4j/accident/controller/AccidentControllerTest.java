@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-
 @SpringBootTest(classes = MainApp.class)
 @AutoConfigureMockMvc
 class AccidentControllerTest {
