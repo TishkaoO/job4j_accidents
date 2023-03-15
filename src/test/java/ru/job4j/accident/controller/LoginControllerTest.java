@@ -24,7 +24,7 @@ class LoginControllerTest {
     @Test
     @WithMockUser
     void whenGetLoginPage() throws Exception {
-        this.mockMvc.perform(get("/formLogins"))
+        this.mockMvc.perform(get("/formLogin"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("users/login"));
