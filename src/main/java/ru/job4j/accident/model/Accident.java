@@ -27,7 +27,6 @@ public class Accident {
     private String address;
 
     @ManyToOne(fetch = FetchType.EAGER)
-
     @JoinColumn(name = "type_id")
     private AccidentType type;
 

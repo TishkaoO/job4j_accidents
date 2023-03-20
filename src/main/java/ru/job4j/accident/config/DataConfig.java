@@ -2,6 +2,8 @@ package ru.job4j.accident.config;
 
 import liquibase.integration.spring.SpringLiquibase;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -18,7 +20,6 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = "ru.job4j.accident.repository")
 @EnableTransactionManagement
 public class DataConfig {
-
     @Primary
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource ds) {
@@ -29,6 +30,19 @@ public class DataConfig {
         factory.setPackagesToScan("ru.job4j.accident");
         factory.setDataSource(ds);
         return factory;
+    }
+
+    @Bean
+    public DataSource connectionPool(@Value("${datasource.url}") String url,
+                                     @Value("${datasource.username}") String username,
+                                     @Value("${datasource.password}") String password) {
+        return new BasicDataSource() {
+            {
+                setUrl(url);
+                setUsername(username);
+                setPassword(password);
+            }
+        };
     }
 
     @Bean
