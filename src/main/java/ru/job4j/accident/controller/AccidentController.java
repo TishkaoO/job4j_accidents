@@ -24,11 +24,11 @@ public class AccidentController {
     @GetMapping("/allAccidents")
     public String getPageAllAccidents(Model model) {
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        model.addAttribute("accidents", accidentService.getAllAccidents());
+        model.addAttribute("accidents", accidentService.findAll());
         return "accidents/listAccident";
     }
 
-    @GetMapping("/formCreate")
+    @GetMapping("/create")
     public String getPageFormCreate(Model model) {
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         model.addAttribute("types", accidentTypeService.getAllAccidentTypes());
@@ -36,44 +36,31 @@ public class AccidentController {
         return "accidents/formCreate";
     }
 
-    @PostMapping("/saveAccident")
-    public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
-                       @RequestParam("rIds") List<Integer> rIds, Model model) {
-        var accidentType = accidentTypeService.getAccidentTypeById(typeId);
-        var rules = ruleService.getRulesById(rIds);
-        var isCreate = accidentService.createAccident(accident, accidentType, rules);
-        if (!isCreate) {
-            model.addAttribute("message",
-                    "Тип нарушения или статья указанным идентификатором не найдены");
-            return "errors/404";
-        }
+    @PostMapping("/create")
+    public String createAccident(@ModelAttribute Accident accident) {
+        accidentService.save(accident);
         return "redirect:/allAccidents";
     }
 
-    @GetMapping("/formUpdate")
-    public String formUpdate(@RequestParam("id") int id, Model model) {
-        Optional<Accident> accident = accidentService.getAccidentById(id);
-        if (accident.isEmpty()) {
-            model.addAttribute("message", "не удалось найти нужный инцидент");
-            return "errors/404";
-        }
+    @GetMapping("/update/{id}")
+    public String refreshAccident(@PathVariable int id, Model model) {
+        Optional<Accident> findAccident = accidentService.findById(id);
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        model.addAttribute("accident", accident.get());
+        model.addAttribute("accident", findAccident.get());
         model.addAttribute("types", accidentTypeService.getAllAccidentTypes());
         model.addAttribute("rules", ruleService.getAllRules());
         return "accidents/formUpdate";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
-                         @RequestParam("rIds") List<Integer> rIds, Model model) {
-        accident.setType(accidentTypeService.getAccidentTypeById(typeId).get());
-        accident.setRules(ruleService.getRulesById(rIds));
-        var isUpdate = accidentService.update(accident);
-        if (!isUpdate) {
-            model.addAttribute("message", "Не удалось обновить данные");
-            return "errors/404";
-        }
+    public String updateAccident(@ModelAttribute Accident accident) {
+        accidentService.update(accident);
+        return "redirect:/allAccidents";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteAccident(@PathVariable int id) {
+        accidentService.deleteAccident(id);
         return "redirect:/allAccidents";
     }
 }

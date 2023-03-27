@@ -28,7 +28,7 @@ public class Accident {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_id")
-    private AccidentType type;
+    private AccidentType accidentType;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(

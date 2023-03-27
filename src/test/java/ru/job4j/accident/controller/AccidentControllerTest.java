@@ -2,13 +2,19 @@ package ru.job4j.accident.controller;
 
 import org.junit.jupiter.api.Test;
 
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ru.job4j.accident.MainApp;
+import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.service.AccidentService;
+
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -18,6 +24,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = MainApp.class)
 @AutoConfigureMockMvc
 class AccidentControllerTest {
+
+    @MockBean
+    private AccidentService accidentService;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -43,8 +53,9 @@ class AccidentControllerTest {
     @Test
     @WithMockUser
     void wheGetPageFormUpdateByAccidentId() throws Exception {
-        int id = 1;
-        this.mockMvc.perform(get("/formUpdate").param("id", String.valueOf(id)))
+        String id = "1";
+        Mockito.when(accidentService.findById(1)).thenReturn(Optional.of(new Accident()));
+        this.mockMvc.perform(get("/formUpdate", id))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("accidents/formUpdate"));

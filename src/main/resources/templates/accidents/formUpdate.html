@@ -1,66 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <title>Обновление инцидента</title>
+    <title>Форма обновления инцидента</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+            integrity="sha384-IZ1y9FlvTNWi8CBmliKnxlGJfZDr2txvz8WvgHQHGOwuIZgrHzWyoy9v+KaPFJoW"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
-    <div>
-        <span>Login as: </span>
-        <span th:text="${user.username}"></span>
-    </div>
-    <header th:insert="blocks/header :: header"></header>
-    <div class="row pt-3">
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                Редактирование инцидента
-            </div>
-            <div class="card-body">
-                <form th:action="@{/update}" method="POST" th:object="${accident}">
-                    <input type="hidden" name="id" th:field="*{id}"/>
-                    <div class="form-group">
-                        <label for="name">Имя</label>
-                        <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Информация о нарушении</label>
-                        <input type="text" class="form-control" name="description" id="description" th:field="*{description}">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Адрес</label>
-                        <input type="text" class="form-control" name="address" id="address" th:field="*{address}">
-                    </div>
-                    <div class="form-group">
-                        <label for="type.id">Выберите тип нарушения</label>
-                        <select class="form-control" id="type.id"  name="type.id">
-                            <option th:each="type: ${types}"
-                                    th:text="${type.name}"
-                                    th:value="${type.id}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="type.id" name="rIds">Статья</label>
-                        <select class="form-control" id="rIds" name="rIds" multiple required>
-                            <option th:each="rule: ${rules}"
-                                    th:text="${rule.name}"
-                                    th:value="${rule.id}"></option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
-            </div>
+    <h1>Форма обновления инцидента</h1>
+    <h4>Пользователь: <span th:text="${user.username}"></span></h4>
+    <form th:action="@{/update}" th:object="${accident}" method="POST">
+        <input type="hidden" th:field="*{id}" />
+        <div class="form-group">
+            <label for="name">Название:</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" />
         </div>
-    </div>
+        <div class="form-group">
+            <label for="description">Описание:</label>
+            <textarea id="description" th:field="*{description}" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="address">Адрес:</label>
+            <input type="text" id="address" th:field="*{address}" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="accidentType">Тип:</label>
+            <select id="accidentType" th:field="*{accidentType}" class="form-control">
+                <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="rules">Правила:</label>
+            <select id="rules" th:field="*{rules}" multiple class="form-control">
+                <option th:each="rule : ${rules}" th:value="${rule.id}" th:text="${rule.name}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
 </div>
 </body>
 </html>
