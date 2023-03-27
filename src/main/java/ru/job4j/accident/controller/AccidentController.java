@@ -45,6 +45,10 @@ public class AccidentController {
     @GetMapping("/update/{id}")
     public String refreshAccident(@PathVariable int id, Model model) {
         Optional<Accident> findAccident = accidentService.findById(id);
+        if (findAccident.isEmpty()) {
+            model.addAttribute("message", "не удалось найти нужный инцидент");
+            return "errors/404";
+        }
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         model.addAttribute("accident", findAccident.get());
         model.addAttribute("types", accidentTypeService.getAllAccidentTypes());
@@ -53,8 +57,12 @@ public class AccidentController {
     }
 
     @PostMapping("/update")
-    public String updateAccident(@ModelAttribute Accident accident) {
-        accidentService.update(accident);
+    public String updateAccident(@ModelAttribute Accident accident, Model model) {
+        var isUpdate = accidentService.update(accident);
+        if (!isUpdate) {
+            model.addAttribute("message", "Не удалось обновить данные");
+            return "errors/404";
+        }
         return "redirect:/allAccidents";
     }
 
