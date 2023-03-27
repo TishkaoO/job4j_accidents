@@ -44,7 +44,7 @@ class AccidentControllerTest {
     @Test
     @WithMockUser
     void whenGetPageFormCreate() throws Exception {
-        this.mockMvc.perform(get("/formCreate"))
+        this.mockMvc.perform(get("/create"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("accidents/formCreate"));
@@ -55,7 +55,7 @@ class AccidentControllerTest {
     void wheGetPageFormUpdateByAccidentId() throws Exception {
         String id = "1";
         Mockito.when(accidentService.findById(1)).thenReturn(Optional.of(new Accident()));
-        this.mockMvc.perform(get("/formUpdate", id))
+        this.mockMvc.perform(get("/update/{id}", id))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("accidents/formUpdate"));
