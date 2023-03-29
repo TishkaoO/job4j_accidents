@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = "ru.job4j.accident.repository")
 @EnableTransactionManagement
 public class DataConfig {
-    @Primary
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource ds) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
